@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Василь Кабулович Кабулов и Кибернетика - Бионика</title>
+
+    <style>
+        /* === O'zgaruvchilar (Variables) === */
+        :root {
+            --primary-color: #004d40; 
+            --secondary-color: #00897b; 
+            --accent-color: #ffb300; 
+            --text-color: #333;
+            --background-color: #e8f5e9; 
+            --white: #fff;
+            --font-stack: 'Roboto', sans-serif;
+        }
+
+        /* === Keyframes Animatsiyalari === */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes titleScale {
+            0% { transform: scaleX(0); }
+            100% { transform: scaleX(1); }
+        }
+
+        /* === Global Uslublar (Global Styles) === */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-stack);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        /* Flex Utility Classes */
+        .flex-row { display: flex; }
+        .flex-center { justify-content: center; }
+        .flex-align-start { align-items: flex-start; }
+        .flex-wrap { flex-wrap: wrap; }
+        .space-between { justify-content: space-between; }
+        .space-around { justify-content: space-around; }
+
+
+        /* === Header va Navigatsiya === */
+        header {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        header h1 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        header nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            display: block;
+            border-radius: 20px;
+            transition: background 0.3s, transform 0.2s;
+            font-weight: bold;
+        }
+
+        header nav ul li a:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        /* === O'ng Tomon Sonli Indikator === */
+        #slide-indicator {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            list-style: none;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #slide-indicator li {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        #slide-indicator a {
+            display: block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 50%;
+            background: #ccc;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        #slide-indicator a:hover {
+            background: var(--accent-color);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        #slide-indicator a.active {
+            background: var(--primary-color);
+            color: var(--white);
+            box-shadow: 0 0 0 3px var(--accent-color); 
+        }
+        
+        /* === Asosiy Bo'limlar === */
+        .content-block {
+            padding: 60px 20px;
+            margin-bottom: 30px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            opacity: 0; 
+            transition: opacity 0.8s, transform 0.8s;
+        }
+
+        .content-block.animated {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .content-block h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 35px;
+            font-size: 2.5em;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .content-block h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+            animation: titleScale 1.5s ease-out;
+        }
+
+        /* --- Kabul Vasilov Bo'limi --- */
+        #kabul-vasilov .bio-content {
+            gap: 40px;
+            padding: 20px;
+        }
+
+        #kabul-vasilov .image-placeholder {
+            min-width: 300px;
+            height: 380px;
+            background: #d4e9d7;
+            border: 5px solid var(--secondary-color);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            line-height: 380px;
+            font-weight: bold;
+            color: var(--text-color);
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #kabul-vasilov .image-placeholder img { 
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        #kabul-vasilov .text-content {
+            flex-grow: 1;
+        }
+        #kabul-vasilov .text-content h3 { color: var(--secondary-color); margin-top: 0; }
+
+        /* --- Ilmiy Faoliyat Bo'limi --- */
+        #faoliyat .achievements ul {
+            list-style: none;
+            padding: 0 40px;
+        }
+        #faoliyat .achievements li {
+            background: #e0f2f1;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 6px solid var(--secondary-color);
+            border-radius: 8px;
+            font-size: 1.1em;
+            transition: background 0.3s, transform 0.3s;
+        }
+        #faoliyat .achievements li:hover {
+            background: #c8e6c9; 
+            transform: translateY(-3px);
+        }
+        #faoliyat .achievements li strong { color: var(--primary-color); }
+
+        /* --- Bionika Bo'limlari --- */
+        .bionika-intro {
+            padding: 20px;
+        }
+        .bionika-intro p { margin-bottom: 15px; }
+
+        .bionika-intro .image-placeholder {
+            margin: 20px auto;
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            background: #d4e9d7;
+            border: 2px solid var(--secondary-color);
+            border-radius: 8px;
+            line-height: 300px;
+        }
+        .bionika-intro .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .bionika-intro .neuron-example {
+            margin-top: 30px;
+            padding: 20px;
+            background: #b2dfdb; 
+            border-radius: 8px;
+        }
+
+        /* --- Bionika Namunalari Galereyasi --- */
+        .examples .gallery {
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .examples .gallery .example-item {
+            flex-basis: 45%; 
+            padding: 25px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            background: var(--white);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .examples .gallery .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .examples .gallery .example-item .image-placeholder {
+            height: 250px;
+            background: #f0f8f0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            line-height: 250px;
+            overflow: hidden;
+        }
+        .examples .gallery .example-item .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .examples .gallery .example-item h3 {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--text-color);
+            color: var(--white);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 40px;
+        }
+
+        /* === Media Queries (Responsiv Dizayn) === */
+
+        /* Planshetlar uchun */
+        @media (max-width: 1024px) {
+            .content-block {
+                padding: 40px 15px;
+            }
+            #kabul-vasilov .bio-content {
+                gap: 20px;
+            }
+            .examples .gallery .example-item {
+                flex-basis: 100%; 
+            }
+        }
+
+        /* Mobil qurilmalar uchun */
+        @media (max-width: 768px) {
+            #slide-indicator {
+                display: none; /* Kichik ekranlarda indikator yashiriladi */
+            }
+            header h1 {
+                font-size: 1.4em;
+            }
+            header nav ul {
+                flex-wrap: wrap;
+            }
+            header nav ul li {
+                flex-basis: 50%; 
+                text-align: center;
+            }
+            
+            #kabul-vasilov .bio-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #kabul-vasilov .bio-content .image-placeholder {
+                min-width: 90%;
+                height: 300px;
+            }
+            .bionika-intro {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <ul id="slide-indicator">
+        <li><a href="#kabul-vasilov" data-slide="1">1</a></li>
+        <li><a href="#faoliyat" data-slide="2">2</a></li>
+        <li><a href="#bionika" data-slide="3">3</a></li>
+        <li><a href="#namunalar" data-slide="4">4</a></li>
+        <li><a href="#thank-you" data-slide="5">5</a></li>
+    </ul>
+
+    <header>
+        <div class="container">
+            <h1>Основатель Кибернетики в Центральной Азии: В. К. Кабулов</h1>
+            <nav>
+                <ul>
+                    <li><a href="#kabul-vasilov">Личность</a></li>
+                    <li><a href="#faoliyat">Научная Деятельность</a></li>
+                    <li><a href="#bionika">Бионика</a></li>
+                    <li><a href="#namunalar">Примеры</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <section id="kabul-vasilov" class="content-block intro-section">
+            <h2 class="main-title">Василь Кабулович Кабулов (1921-2010)</h2>
+            <div class="bio-content flex-row space-between flex-align-start">
+                <div class="image-placeholder main-image">
+                    <img src="img/kabulov1.png" alt="Портрет Василя Кабуловича Кабулова">
+                </div>
+                <div class="text-content">
+                    <h3>Основатель Кибернетики и Цифровых Технологий в Центральной Азии</h3>
+                    <p>Академик Василь Кабулович Кабулов (1921–2010) посвятил всю свою жизнь науке. В своей научной деятельности он в основном работал над **теорией стержней, оболочек и пластинок**, а также **алгоритмизацией в кибернетике и механике сплошной среды**.</p>
+                    <p>Он был великим ученым и руководителем, внесшим огромный вклад в подготовку кадров и развитие кибернетической науки в Узбекистане.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="faoliyat" class="content-block">
+            <h2>Научная и Профессиональная Деятельность</h2>
+            <div class="achievements">
+                <ul>
+                    <li><strong>Ключевой Научный Вклад:</strong> Посвятил свою жизнь теории стержней, оболочек и пластинок, алгоритмизации в кибернетике и механике сплошной среды, а также занимал ряд ключевых должностей.</li>
+                    <li><strong>Вычислительный Центр:</strong> Василь Кабулов руководил вычислительным центром Академии наук Узбекской ССР с 1960-х годов.</li>
+                    <li><strong>Директорство:</strong> Был директором Института механики и кибернетики с 1963 по 1974 год.</li>
+                    <li><strong>Международные Связи:</strong> Имел тесные творческие связи с ведущими учеными своего времени.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="bionika" class="content-block bionika-section">
+            <h2 class="bionika-title">Бионика: Как Природа Помогает Технике</h2>
+            <div class="bionika-intro">
+                <div class="image-placeholder small-image">
+                    <img src="img/kabulov2.png" alt="Бионика: Концепция и технологии природы">
+                </div>
+                <p>**Бионика** — это изучение строения, функций и жизненных процессов живых организмов и применение принципов, полученных из них, для создания инженерных решений и технологий.</p>
+                
+                <div class="neuron-example">
+                    <h3>Нейроны – Искусственные Нейросети</h3>
+                    <div class="image-placeholder large-image">
+                        <img src="img/kabulov3.png" alt="Нейроны - Искусственные нейросети">
+                    </div>
+                    <p>Изучение принципа работы **нейронов** в человеческом мозге вдохновило на создание современных цифровых технологий, таких как искусственный интеллект (ИИ) и **искусственные нейронные сети**.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="namunalar" class="content-block examples">
+            <h2>Примеры Бионики на Практике</h2>
+            <div class="gallery flex-row space-around flex-wrap">
+                <div class="example-item">
+                    <div class="image-placeholder medium-image">
+                        <img src="img/kabulov4.png" alt="Движение рыбы: Пример подводной техники">
+                    </div>
+                    <h3>1. Движение Рыбы – Подводная Техника</h3>
+                    <p>Кабулов приводил пример плавников рыбы: Рыба движется очень мягко, тихо и экономно — лучше любого мотора.</p>
+                    <p>Если понять этот принцип, можно создать подводные аппараты, которые будут **двигаться устойчиво** и **расходовать меньше энергии**.</p>
+                    <p>Так природа подсказала инженерам форму и движение механизмов.</p>
+                </div>
+
+                <div class="example-item">
+                    <div class="image-placeholder medium-image tree-branching-image">
+                        <img src="img/kabulov5.png" alt="Ветвление деревьев в архитектуре">
+                    </div>
+                    <h3>2. Ветвление Деревьев – Архитектура</h3>
+                    <p>Василь Кабулов показывал, что ветка дерева растет по определенному **"правилу"**: от ствола – ветка, от ветки – еще ветки, и так повторяется.</p>
+                    <p>Эта идея помогает в создании:</p>
+                    <ul>
+                        <li>3D-моделей</li>
+                        <li>Архитектурных конструкций</li>
+                        <li>Систем распределения воды и электричества</li>
+                    </ul>
+                    <p>То есть дерево – это не просто растение, а **готовый алгоритм**.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="thank-you" class="content-block">
+            <h2 class="thank-you-text" style="color: var(--accent-color);">Спасибо за внимание!</h2>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Презентация. Посвящается памяти В. К. Кабулова.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const contentBlocks = document.querySelectorAll('.content-block');
+            const navLinks = document.querySelectorAll('nav a');
+            const slideIndicatorLinks = document.querySelectorAll('#slide-indicator a');
+            
+            // Bo'lim IDlarini tartibda olish
+            const sectionIds = Array.from(contentBlocks).map(block => block.id);
+
+            // === 1. Silliq navigatsiya va Indikator ishi (Scroll) ===
+            const smoothScroll = (e) => {
+                e.preventDefault();
+                const targetId = e.currentTarget.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    // Header balandligini hisobga olish (agar sticky bo'lsa, bu yerda sticky emas, lekin foydali)
+                    const offset = 0; 
+                    window.scrollTo({
+                        top: targetElement.offsetTop - offset,
+                        behavior: 'smooth'
+                    });
+                }
+            };
+
+            navLinks.forEach(anchor => anchor.addEventListener('click', smoothScroll));
+            slideIndicatorLinks.forEach(anchor => anchor.addEventListener('click', smoothScroll));
+
+
+            // === 2. Scroll Animatsiyasi (Fade-in on Scroll) va Aktiv Slaydni Aniqlash ===
+            const checkVisibility = () => {
+                const windowHeight = window.innerHeight;
+                let activeSectionId = '';
+                let isScrolledToBottom = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5; // 5px padding
+
+                contentBlocks.forEach(block => {
+                    const blockTop = block.getBoundingClientRect().top;
+                    const blockBottom = block.getBoundingClientRect().bottom;
+
+                    // 1. Animatsiyani ishga tushirish
+                    if (blockTop < windowHeight - 100) {
+                        block.classList.add('animated');
+                    }
+                    
+                    // 2. Aktiv bo'limni aniqlash
+                    // Agar bo'lim ekranning markaziga yaqin bo'lsa
+                    if (blockTop <= windowHeight / 2 && blockBottom > windowHeight / 2) {
+                        activeSectionId = block.id;
+                    } 
+                });
+
+                // Eng pastga scroll qilingan bo'lsa, oxirgi bo'limni aktivlashtiramiz
+                if (isScrolledToBottom) {
+                    activeSectionId = contentBlocks[contentBlocks.length - 1].id;
+                }
+                
+                // Aktiv indikatorni belgilash
+                if (activeSectionId) {
+                    slideIndicatorLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === activeSectionId) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+                
+            };
+
+            // Scroll va yuklanishda funksiyani chaqirish
+            window.addEventListener('scroll', checkVisibility);
+            window.addEventListener('resize', checkVisibility);
+            checkVisibility(); // Sayt yuklanganda bir marta chaqirish
+        });
+    </script>
+</body>
+</html>
